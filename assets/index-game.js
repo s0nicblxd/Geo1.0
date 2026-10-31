@@ -70834,6 +70834,18 @@ const u = 0x1 / 0xf0
   , _ = _0x6e411f(0xf5e)
   , w = _0x6e411f(0xa24)
   , T = 0x1cc;
+// Experimental cube curves from the supplied Desmos graph:
+// g(x) = -x*x/70, jump/orb slope 23/12, pad slope 11/4.
+// Graph coordinates use GD units; this renderer doubles both axes.
+// Thus Y(X) = slope*X - X*X/140 and acceleration = c*c/70.
+// Keep p above unchanged: ship acceleration uses its separate existing model.
+const CUBE_GRAPH_PHYSICS = Object.freeze({
+    gravity: c * c / 70,
+    jump: c * 23 / 12,
+    pad: c * 11 / 4,
+    maxFall: c * 13 / 5,
+    portalOpposingLimit: c * 5 / 4
+});
 function b(_0x3ed2c6) {
     return T - _0x3ed2c6;
 }
@@ -76476,17 +76488,17 @@ class ps {
                 this['p'][_0x14d343(0x9ab)] = !0x1,
                 this['p']['canJump'] = !0x1,
                 this['p'][_0x14d343(0x1086)] = !0x1,
-                this['p'][_0x14d343(0x845)] = 22.360064 * this['flipMod'](),
+                this['p'][_0x14d343(0x845)] = CUBE_GRAPH_PHYSICS.jump * this['flipMod'](),
                 this[_0x14d343(0x18a6)]();
             else {
                 if (this['p'][_0x14d343(0x18a3)])
-                    this['p'][_0x14d343(0x845)] -= p * _0x3d1c6f * this['flipMod'](),
+                    this['p'][_0x14d343(0x845)] -= CUBE_GRAPH_PHYSICS.gravity * _0x3d1c6f * this['flipMod'](),
                     this[_0x14d343(0xcaa)]() && (this['p']['isJumping'] = !0x1,
                     this['p'][_0x14d343(0x9ab)] = !0x1);
                 else {
                     if (this[_0x14d343(0xcaa)]() && (this['p'][_0x14d343(0x18ce)] = !0x1),
-                    this['p'][_0x14d343(0x845)] -= p * _0x3d1c6f * this[_0x14d343(0x4bd)](),
-                    this['p'][_0x14d343(0xa22)] ? this['p'][_0x14d343(0x845)] = Math['min'](this['p'][_0x14d343(0x845)], 0x1e) : this['p'][_0x14d343(0x845)] = Math['max'](this['p'][_0x14d343(0x845)], -0x1e),
+                    this['p'][_0x14d343(0x845)] -= CUBE_GRAPH_PHYSICS.gravity * _0x3d1c6f * this[_0x14d343(0x4bd)](),
+                    this['p'][_0x14d343(0xa22)] ? this['p'][_0x14d343(0x845)] = Math['min'](this['p'][_0x14d343(0x845)], CUBE_GRAPH_PHYSICS.maxFall) : this['p'][_0x14d343(0x845)] = Math['max'](this['p'][_0x14d343(0x845)], -CUBE_GRAPH_PHYSICS.maxFall),
                     this[_0x14d343(0x3cf)]() && !this[_0x14d343(0x12fd)] && this[_0x14d343(0x18a6)](),
                     this[_0x14d343(0xcaa)]()) {
                         let _0x47ed2a;
@@ -78726,7 +78738,17 @@ const Ss = {
                 if (this.p.gravityFlipped === o.reversed) continue;
 
                 this.p.gravityFlipped = o.reversed;
-                this.p.yVelocity = o.reversed ? -10 : 10;
+                if (this.p.isFlying) {
+                    // The supplied curves cover cube mode; preserve ship behavior.
+                    this.p.yVelocity = o.reversed ? -10 : 10;
+                } else {
+                    // Limit motion AGAINST the new gravity, rather than forcing
+                    // a new velocity. Preserve slower/already-aligned motion.
+                    const limit = CUBE_GRAPH_PHYSICS.portalOpposingLimit;
+                    this.p.yVelocity = o.reversed
+                        ? Math.max(this.p.yVelocity, -limit)
+                        : Math.min(this.p.yVelocity, limit);
+                }
                 this.p.onGround = false;
                 this.p.onCeiling = false;
                 this.p.canJump = false;
@@ -78859,7 +78881,7 @@ const Ss = {
 
         o.activated = true;
         p.yVelocity =
-          (o.type === "yellow_pad" ? 31.5 : 22.2) * this.flipMod();
+          (o.type === "yellow_pad" ? CUBE_GRAPH_PHYSICS.pad : CUBE_GRAPH_PHYSICS.jump) * this.flipMod();
         p.onGround = p.canJump = p.upKeyPressed = false;
         p.isJumping = true;
         if (o.type === "yellow_ring") p._yellowPressPending = false;
