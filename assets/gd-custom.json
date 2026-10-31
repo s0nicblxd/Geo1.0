@@ -1,0 +1,132 @@
+{
+  "frames": {
+    "ring_01_001.png": {
+      "frame": {
+        "x": 2,
+        "y": 2,
+        "w": 60,
+        "h": 60
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 60,
+        "h": 60
+      },
+      "sourceSize": {
+        "w": 60,
+        "h": 60
+      }
+    },
+    "bump_01_001.png": {
+      "frame": {
+        "x": 68,
+        "y": 2,
+        "w": 50,
+        "h": 8
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 50,
+        "h": 8
+      },
+      "sourceSize": {
+        "w": 50,
+        "h": 8
+      }
+    },
+    "portal_01_back_001.png": {
+      "frame": {
+        "x": 130,
+        "y": 2,
+        "w": 86,
+        "h": 155
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 86,
+        "h": 155
+      },
+      "sourceSize": {
+        "w": 86,
+        "h": 155
+      }
+    },
+    "portal_01_front_001.png": {
+      "frame": {
+        "x": 220,
+        "y": 2,
+        "w": 86,
+        "h": 155
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 86,
+        "h": 155
+      },
+      "sourceSize": {
+        "w": 86,
+        "h": 155
+      }
+    },
+    "portal_02_back_001.png": {
+      "frame": {
+        "x": 310,
+        "y": 2,
+        "w": 86,
+        "h": 155
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 86,
+        "h": 155
+      },
+      "sourceSize": {
+        "w": 86,
+        "h": 155
+      }
+    },
+    "portal_02_front_001.png": {
+      "frame": {
+        "x": 400,
+        "y": 2,
+        "w": 86,
+        "h": 155
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 86,
+        "h": 155
+      },
+      "sourceSize": {
+        "w": 86,
+        "h": 155
+      }
+    }
+  },
+  "meta": {
+    "image": "gd-custom.png",
+    "size": {
+      "w": 512,
+      "h": 256
+    },
+    "scale": "1"
+  }
+}
